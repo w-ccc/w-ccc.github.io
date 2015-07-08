@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Homework2</title>
+		<style type="text/css">
+			div.introduction{background:#999;width:300px;height:100%;position:fixed;right:0;bottom:0;text-align:center;}
+			div.footer{position:absolute;bottom:0;left:center;width:100%;text-align:center;}
+			div.container{margin-right:300px;}
+			div.column{width:100%;margin-left:10px;}
+			div.colElem{width:100px;padding:1px;text-align:center;float:left;margin-left:10px;}
+			div.content{margin-top:40px;margin-left:10%;margin-right:10%;border:3px dashed #AAA;}
+			div.contentTitle{margin-top:40px;margin-left:10px;}
+			div.contentShow{margin-left:5%;margin-right:5%;}
+			p.contentTitle{font-family:SimHei;font-size:25px;}
+			p.contentShow{font-family:FangSong;font-size:18px;}
+			p.column{font-family:Microsoft JhengHei;font-size:20px;}
+			p.introduction{color:white;padding:16px;font-family:KaiTi;font-size:18px;line-height:30px;}
+			p.information{color:white;padding:16px;font-family:KaiTi;font-size:15px;line-height:25px;}
+			p.footer{color:white; font-family:Arial;font-size:5px;}
+			a:link,a:visited{color:black;text-decoration:none;}
+			a:hover,a:active{color:red;text-decoration:none;}
+		</style>
+	</head>
+<body bgcolor="#DDD">
+	<div class="introduction">
+		<div style="padding:10px;margin:15px auto">
+			<img src="https://raw.githubusercontent.com/w-ccc/w-ccc.github.io/master/image/photo.jpg" width = "100%"/>
+		</div>
+		<hr style="width:80%;border:1px double skyblue;"/>
+		<p class="introduction">
+			姓名：池婧雯<br/>
+			专业：软件工程<br/>
+			特长：睡懒觉<br/>
+			爱好：玩游戏、看动漫、画漫画、密室逃脱……和睡懒觉
+		</p>
+		<p class="information">
+			GitHub:w-ccc<br/>
+			微信号：15011211197<br/>
+			邮箱：chijingwen13@gmail.com
+		</p>
+		<div class="footer">
+			<p class="footer">Copyright © 2015 by Wendy Chi.</p>
+			<p class="footer">All rights reserved.</p>
+		</div>
+	</div>
+	<div class="container">
+		<div class="column">
+			<div class="colElem">
+				<p class="column"><a href="http://w-ccc.github.io/">个人日志</a></p>
+			</div>
+			<div class="colElem">
+				<p class="column"><a href="http://w-ccc.github.io/HWPage.html"><strong>课程作业</strong></a></p>
+				<hr style="color:gray;width:100px;border:1px solid gray;"/>
+			</div>
+		</div>
+		<hr style="color:black;width:100%;border:1px dashed skyblue;"/>
+		<div class="content">
+			<div class="contentTitle"><p class="contentTitle">基础练习2</p></div>
+			<hr style="color:#EEE;width:25%;border:1px solid #BBB;margin-left:5px;"/>
+			<div class="contentShow">
+				<p class="contentShow">
+				执行语句(function f(f){return typeof f();})(function(){return bar;bar=10;function bar(){}var bar='11';});<br/><br/>
+				结果为
+				<script language="JavaScript">
+					var a=(function f(f){return typeof f();})(function(){return bar;bar=10;function bar(){}var bar='11';});
+					document.write(a);
+				</script>
+				<br/><br/>
+				</p>
+			</div>
+		</div>
+		<div class="content">
+			<div class="contentTitle"><p class="contentTitle">基础练习3</p></div>
+			<hr style="color:#EEE;width:25%;border:1px solid #BBB;margin-left:5px;"/>
+			<div class="contentShow">
+				<p class="contentShow">
+				执行语句var foo={bar:function(){return this.baz;},baz:2};<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(function(){return typeof arguments[0]();})(foo.bar);<br/>
+				结果为
+				<script language="JavaScript">
+					var foo={bar:function(){return this.baz;},baz:2};
+					var a=(function(){return typeof arguments[0]();})(foo.bar);
+					document.write(a);
+				</script>
+				<br/><br/>
+				修改为var foo={bar:function(){return this.baz;},baz:2};<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(function(){return typeof arguments[0];})(foo.bar());<br/>
+				结果为
+				<script language="JavaScript">
+					var foo={bar:function(){return this.baz;},baz:2};
+					var a=(function(){return typeof arguments[0];})(foo.bar());
+					document.write(a);
+				</script>
+				<br/><br/>
+				修改为var foo={bar:function(){return this.baz;},baz:2};<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(function(){return typeof arguments[0].call(foo);})(foo.bar);<br/>
+				结果为
+				<script language="JavaScript">
+					var foo={bar:function(){return this.baz;},baz:2};
+					var a=(function(){return typeof arguments[0].call(foo);})(foo.bar);
+					document.write(a);
+				</script>
+				<br/><br/>
+				</p>
+			</div>
+		</div>
+		<div class="content">
+			<div class="contentTitle"><p class="contentTitle">基础练习4</p></div>
+			<hr style="color:#EEE;width:25%;border:1px solid #BBB;margin-left:5px;"/>
+			<div class="contentShow">
+				<p class="contentShow">
+				执行语句a=new Array();<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b=new Array();<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a[1]=3;<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b[2]=5;<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a=b<br/><br/>
+				结果为[
+				<script language="JavaScript">
+					a=new Array();
+					b=new Array();
+					a[1]=3;
+					b[2]=5;
+					a=b;
+					document.write(a);
+				</script>
+				]<br/><br/>
+				</p>
+			</div>
+		</div>
+		<div class="content">
+			<div class="contentTitle"><p class="contentTitle">基础练习5</p></div>
+			<hr style="color:#EEE;width:25%;border:1px solid #BBB;margin-left:5px;"/>
+			<div class="contentShow">
+				<p class="contentShow">
+				执行语句a=(new Array("test",1,2,3,-1,-2,-3,0xFFFFF)).sort();<br/>
+				结果为[
+				<script language="JavaScript">
+					a=(new Array("test",1,2,3,-1,-2,-3,0xFFFFF)).sort();
+					document.write(a);
+				</script>
+				]<br/><br/>
+				修改为a=(new Array("test",1,2,3,-1,-2,-3,0xFFFFF)).sort(function compare(a,b){return a-b;});<br/>
+				结果为[
+				<script language="JavaScript">
+					a=(new Array("test",1,2,3,-1,-2,-3,0xFFFFF)).sort(function compare(a,b){return a-b;});
+					document.write(a);
+				</script>
+				]<br/><br/>
+				</p>
+			</div>
+		</div>
+		<div class="content">
+			<div class="contentTitle"><p class="contentTitle">进阶练习1</p></div>
+			<hr style="color:#EEE;width:25%;border:1px solid #BBB;margin-left:5px;"/>
+			<div class="contentShow">
+				<p class="contentShow">
+				function sum(){<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var sum = 0;<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(var i = 0; i < arguments.length; i++){<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(parseFloat(arguments[i]))<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum+=parseFloat(arguments[i]);<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum = sum.toFixed(10);<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return parseFloat(sum);<br/>
+				};<br/><br/>
+				测试样例结果如下：<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum(1,2,3,4,5)=
+				<script language="JavaScript">
+					function sum(){var sum = 0;for(var i = 0; i < arguments.length; i++){if(parseFloat(arguments[i]))sum+=parseFloat(arguments[i]);}sum = sum.toFixed(10);return parseFloat(sum);};
+					var a=sum(1,2,3,4,5);
+					document.write(a);
+				</script>
+				<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum(5,null,-5)=
+				<script language="JavaScript">
+					var a=sum(5,null,-5);
+					document.write(a);
+				</script>
+				<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum('1.0',false,1,true,1,'A',1,'B',1,'C',1,'D',1,'E',1,'F',1,'G',1)=
+				<script language="JavaScript">
+					var a=sum('1.0',false,1,true,1,'A',1,'B',1,'C',1,'D',1,'E',1,'F',1,'G',1);
+					document.write(a);
+				</script>
+				<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum(0.1,0.2)=
+				<script language="JavaScript">
+					var a=sum(0.1,0.2);
+					document.write(a);
+				</script>
+				<br/><br/>
+				</p>
+			</div>
+		</div>
+		<div class="content">
+			<div class="contentTitle"><p class="contentTitle">进阶练习2</p></div>
+			<hr style="color:#EEE;width:25%;border:1px solid #BBB;margin-left:5px;"/>
+			<div class="contentShow">
+				<p class="contentShow">
+				function sortSutdent(studentArray, n)<br/>
+				{<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function compare(student1, student2)<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(student1.age < student2.age)<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(student2.age < student1.age)<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(student1.score < student2.score)<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(student2.score < student1.score)<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(student1.name[0] < student2.name[0])<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(student2.name[0] < student1.name[0])<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return studentArray.sort(compare);<br/>
+				};
+				<br/><br/>
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
