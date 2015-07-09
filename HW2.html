@@ -158,8 +158,8 @@
 				function sum(){<br/>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var sum = 0;<br/>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(var i = 0; i < arguments.length; i++){<br/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(parseFloat(arguments[i]))<br/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum+=parseFloat(arguments[i]);<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(typeof(arguments[i]+1) == 'number')<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum+=arguments[i];<br/>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum = sum.toFixed(10);<br/>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return parseFloat(sum);<br/>
@@ -167,7 +167,7 @@
 				测试样例结果如下：<br/>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum(1,2,3,4,5)=
 				<script language="JavaScript">
-					function sum(){var sum = 0;for(var i = 0; i < arguments.length; i++){if(parseFloat(arguments[i]))sum+=parseFloat(arguments[i]);}sum = sum.toFixed(10);return parseFloat(sum);};
+					function sum(){var sum = 0;for(var i = 0; i < arguments.length; i++){if(typeof(arguments[i]+1) == 'number')sum+=arguments[i];}sum = sum.toFixed(10);return parseFloat(sum);};
 					var a=sum(1,2,3,4,5);
 					document.write(a);
 				</script>
