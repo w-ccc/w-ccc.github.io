@@ -284,6 +284,7 @@
 					button.style.bottom="20px";
 					Modal.appendChild(button);
 					var drag=true;
+					var cKey=27;
 					function showDiv()
 					{
 						var Modal=document.getElementById('Modal');
@@ -329,6 +330,11 @@
 						{
 							Modal.onmousedown=null;
 						}
+						document.onkeydown=function(evt)
+						{
+							if(evt.keyCode==cKey)
+								closeDiv();
+						};
 					}
 					function closeDiv()
 					{
@@ -372,11 +378,7 @@
 						}
 						if(set&&set.closeKey)
 						{
-							document.onkeypress=function(evt)
-							{
-								if(evt.keyCode==set.closeKey)
-									closeDiv();
-							};
+							cKey=set.closeKey;
 						}
 					};
 				</script>
