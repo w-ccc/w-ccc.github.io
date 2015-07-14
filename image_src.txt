@@ -1,4 +1,4 @@
-var image=[{
+[{
 	"src":"image/r1.jpg"},{
 	"src":"image/r2.jpg"},{
 	"src":"image/r3.jpg"},{
