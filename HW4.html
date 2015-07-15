@@ -11,7 +11,7 @@
 			div.colElem{width:1000px;padding:1px;text-align:center;float:left;margin-left:10px;}
 			div.pic-wrapper{margin-top:40px;margin-left:10%;margin-right:10%;border:3px dashed #AAA;overflow:hidden;}
 			div.pic-column{width:23%;float:left;margin-left:1%;margin-right:1%;}
-			div.image{background-color:white;margin-top:15px; padding:8px;}
+			div.image{background-color:white;margin-top:15px; padding:8px;box-shadow:10px 10px 5px 5px #CCC;}
 			div#location{position:fixed;display:none;background-color:#FFF;text-align:center;border:1px solid black;padding:5px;}
 			p.location{font-size:10px;font-family:KaiTi;padding:0;margin-top:0;margin-bottom:0;}
 			p.contentTitle{font-family:SimHei;font-size:18px;}
@@ -52,6 +52,8 @@
 				<p class="column"><strong>王小寒的♡秀恩爱♡网站</strong></p>
 			</div>
 		</div>
+		<div id="nextPage" style="position:absolute;right:0;top:910px;display:none;"><input type="button" value="下页" onclick="nextpage()"/></div>
+		<div id="prePage" style="position:absolute;right:100px;top:910px;display:none;"><input type="button" value="上页" onclick="prepage()"/></div>
 		<hr style="color:black;width:100%;border:1px dashed skyblue;"/>
 		<div class="pic-wrapper">
 			<div class="pic-column" id="pic-column1">
@@ -71,12 +73,58 @@ req.onreadystatechange=myHandler;
 req.send(null);
 var endPic=0;
 var endComment=0;
+var curpage=0;
+var curPicId;
+var nextPage=document.getElementById("nextPage");
+function nextpage(){curpage++;addComment(curpage*10,curpage*10+10);}
+var prePage=document.getElementById("prePage");
+function prepage(){curpage--;addComment(curpage*10,curpage*10+10);}
 var req_comment=new XMLHttpRequest();
 var comment_text=null;
 var image=null;
 req_comment.open("GET","https://raw.githubusercontent.com/w-ccc/w-ccc.github.io/master/comment.txt",true);
 req_comment.onreadystatechange=function(){if(req_comment.readyState==4)comment_text=eval('('+req_comment.responseText+')');}
 req_comment.send(null);
+var coords=null;
+if(navigator.geolocation)
+{navigator.geolocation.getCurrentPosition(getPosition);}
+if(!coords){alert("无法收到位置信息！");}
+function getPosition(pos){
+	coords=new Object();
+	coords.latitude=pos.coords.latitude;
+	coords.longitude=pos.coords.longitude;
+}
+var EARTH_RADIUS = 6378137.0;
+var PI = Math.PI;
+function getRad(d){return d*PI/180.0;}
+function getFlatternDistance(lat1,lng1,lat2,lng2){
+	var f = getRad((lat1 + lat2)/2);
+	var g = getRad((lat1 - lat2)/2);
+	var l = getRad((lng1 - lng2)/2);
+	
+	var sg = Math.sin(g);
+	var sl = Math.sin(l);
+	var sf = Math.sin(f);
+	
+	var s,c,w,r,d,h1,h2;
+	var a = EARTH_RADIUS;
+	var fl = 1/298.257;
+	
+	sg = sg*sg;
+	sl = sl*sl;
+	sf = sf*sf;
+	
+	s = sg*(1-sl) + (1-sf)*sl;
+	c = (1-sg)*(1-sl) + sf*sl;
+	
+	w = Math.atan(Math.sqrt(s/c));
+	r = Math.sqrt(s*c)/w;
+	d = 2*w*a;
+	h1 = (3*r -1)/2/c;
+	h2 = (3*r +1)/2/s;
+	
+	return d*(1 + fl*(h1*sf*(1-sg) - h2*(1-sf)*sg))/1000;
+}
 function myHandler(){
 	if(req.readyState==4)
 	{
@@ -100,6 +148,7 @@ function myHandler(){
 			img[endPic].style.marginTop="15px";
 			img[endPic].style.textAlign="center";
 			img[endPic].style.padding="8px";
+			img[endPic].style.boxShadow="5px 3px 5px #888"
 			img[endPic].onmousedown=clickPic;
 			document.getElementById("pic-column"+current_column).appendChild(img[endPic]);
 			current_column=parseInt(current_column%4)+1;
@@ -109,7 +158,8 @@ function myHandler(){
 }
 
 function showLocation(){
-	var locationDiv=document.getElementById("location")
+	var locationDiv=document.getElementById("location");
+	var distance;
 	if(!locationDiv)
 	{
 		locationDiv=document.createElement("div");
@@ -117,9 +167,15 @@ function showLocation(){
 		locationDiv.style.zIndex="2000";
 		document.body.appendChild(locationDiv);
 	}
-	locationDiv.style.left=event.clientX+"px";
-	locationDiv.style.top=event.clientY+"px";
-	locationDiv.innerHTML="<p class=location>纬度：北纬"+image[parseInt(this.id)].loc_x+"<br/>经度：东经"+image[parseInt(this.id)].loc_y+"</p>";
+	locationDiv.style.left=event.clientX+5+"px";
+	locationDiv.style.top=event.clientY+5+"px";
+	if(coords)
+	{
+		distance=getFlatternDistance(coords.latitude,coords.longitude,image[parseInt(this.id)].loc_x,image[parseInt(this.id)].loc_y);
+		locationDiv.innerHTML="<p class=location>纬度：北纬"+image[parseInt(this.id)].loc_x+"<br/>经度：东经"+image[parseInt(this.id)].loc_y+"<br/>距离您"+distance+"KM</p>";
+	}
+	else
+		locationDiv.innerHTML="<p class=location>纬度：北纬"+image[parseInt(this.id)].loc_x+"<br/>经度：东经"+image[parseInt(this.id)].loc_y+"</p>";
 	locationDiv.style.display="block";
 }
 
@@ -139,60 +195,31 @@ window.addEventListener('scroll',function(){
 
 function clickPic(){
 	hideLocation();
+	curPicId=parseInt(this.firstChild.id);
 	var showPic=document.createElement("div");
 	var Pic=document.createElement("img");
 	Pic.src=this.firstChild.src;
-	Pic.style.height=document.documentElement.clientHeight-200+"px";
+	Pic.style.height="100%";
 	Pic.onmousedown=closeBigPic;
 	showPic.setAttribute("id","Pic");
 	showPic.appendChild(Pic);
 	showPic.style.position="absolute";
 	showPic.style.zIndex = "1000";
-	showPic.style.width=document.documentElement.clientWidth-1000+"px";
-	showPic.style.height=document.documentElement.clientHeight-200+"px";
-	showPic.style.left="250px";
+	showPic.style.height="75%";
+	showPic.style.left="15%";
+	showPic.style.backgroundColor="#FFF";
 	showPic.style.top=100+pageYOffset+"px";
 	showPic.onmousedown=closeBigPic;
+	curpage=0;
 	var comment=document.createElement("div");
 	comment.setAttribute("id","comment");
+	document.body.appendChild(comment);
 	comment.style.overflow="auto";
 	if(comment_text)
 	{
-		if(comment_text[parseInt(this.firstChild.id)].length)
+		if(comment_text[curPicId].length)
 		{
-			var comment_userlist=[];
-			var comment_list=[];
-			var comment_timelist=[];
-			var commentDiv=[];
-			var timeDiv=[];
-			for(var i = 0; i < comment_text[parseInt(this.firstChild.id)].length; i++)
-			{
-				if(i < comment_text[parseInt(this.firstChild.id)].length)
-				{
-					commentDiv[i]=document.createElement("div");
-					commentDiv[i].style.position="absolute";
-					commentDiv[i].style.width="90%";
-					commentDiv[i].style.top=10+i*90+"px";
-					commentDiv[i].style.float="top";
-					comment_userlist[i]=document.createElement("p");
-					comment_list[i]=document.createElement("p");
-					comment_userlist[i].innerHTML=comment_text[parseInt(this.firstChild.id)][i].user;
-					comment_userlist[i].setAttribute("class","contentTitle");
-					comment_list[i].setAttribute("class","contentShow");
-					comment_list[i].innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+comment_text[parseInt(this.firstChild.id)][i].comment+"<br/>";
-					timeDiv[i]=document.createElement("div");
-					timeDiv[i].style.position="absolute";
-					timeDiv[i].style.right="0";
-					timeDiv[i].style.float="left";
-					comment_timelist[i]=document.createElement("p");
-					comment_timelist[i].innerHTML=comment_text[parseInt(this.firstChild.id)][i].time;
-					commentDiv[i].appendChild(comment_userlist[i]);
-					commentDiv[i].appendChild(timeDiv[i]);
-					commentDiv[i].appendChild(comment_list[i]);
-					timeDiv[i].appendChild(comment_timelist[i]);
-					comment.appendChild(commentDiv[i]);
-				}	
-			}
+			addComment(0,10);
 		}
 		else
 			comment.innerHTML="<p class=contentTitle>暂无评论</p>";
@@ -205,11 +232,11 @@ function clickPic(){
 	comment.style.border="6px dashed #AAA";
 	comment.style.position="absolute";
 	comment.style.zIndex = "1000";
-	comment.style.height="400px";
-	comment.style.width="500px";
+	comment.style.height="70%";
+	comment.style.width="40%";
 	comment.style.padding="10px";
-	comment.style.top=150+pageYOffset+"px";
-	comment.style.right="100px";
+	comment.style.top=100+pageYOffset+"px";
+	comment.style.right="10%";
 	var bg = document.createElement("div"); 
 	bg.setAttribute("id","mybg");
 	bg.style.background = "#000";
@@ -225,7 +252,60 @@ function clickPic(){
 	document.body.appendChild(bg);
 	document.body.style.overflow = "hidden";
 	document.body.appendChild(showPic);
-	document.body.appendChild(comment);
+}
+
+function addComment(start,end)
+{
+	var comment_userlist=[];
+	var comment_list=[];
+	var comment_timelist=[];
+	var commentDiv=[];
+	var timeDiv=[];
+	var comment=document.getElementById("comment");
+	while(comment.hasChildNodes())
+	{
+		comment.removeChild(comment.firstChild);
+	}
+	comment.scrollTop=0;
+	for(var i = start; i < end; i++)
+	{
+		if(i < comment_text[curPicId].length)
+		{
+			commentDiv[i]=document.createElement("div");
+			commentDiv[i].style.position="absolute";
+			commentDiv[i].style.width="90%";
+			commentDiv[i].style.top=10+(i-curpage*10)*90+"px";
+			commentDiv[i].style.float="top";
+			comment_userlist[i]=document.createElement("p");
+			comment_list[i]=document.createElement("p");
+			comment_userlist[i].innerHTML=comment_text[curPicId][i].user;
+			comment_userlist[i].setAttribute("class","contentTitle");
+			comment_list[i].setAttribute("class","contentShow");
+			comment_list[i].innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+comment_text[curPicId][i].comment+"<br/>";
+			timeDiv[i]=document.createElement("div");
+			timeDiv[i].style.position="absolute";
+			timeDiv[i].style.right="0";
+			timeDiv[i].style.float="left";
+			comment_timelist[i]=document.createElement("p");
+			comment_timelist[i].innerHTML=comment_text[curPicId][i].time;
+			commentDiv[i].appendChild(comment_userlist[i]);
+			commentDiv[i].appendChild(timeDiv[i]);
+			commentDiv[i].appendChild(comment_list[i]);
+			timeDiv[i].appendChild(comment_timelist[i]);
+			comment.appendChild(commentDiv[i]);
+		}
+	}
+	if(curpage>0)
+	{
+		comment.appendChild(prePage);
+		prePage.style.display="block";
+		
+	}
+	if(comment_text[curPicId].length>curpage*10+10)
+	{
+		comment.appendChild(nextPage);
+		nextPage.style.display="block";
+	}
 }
 
 function closeBigPic(){
@@ -233,6 +313,8 @@ function closeBigPic(){
 	document.body.removeChild(document.getElementById('mybg'));
 	document.body.removeChild(document.getElementById('Pic'));
 	document.body.removeChild(document.getElementById('comment'));
+	prePage.style.display="none";
+	nextPage.style.display="none";
 }
 
 </script>
