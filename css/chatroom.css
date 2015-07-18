@@ -1,0 +1,148 @@
+div#ChatField{
+	left:50%;
+	top:50%;
+	margin-left:-500px;
+	margin-top:-250px;
+	position:absolute;
+	-webkit-border-radius:15px;
+	background-color:#EEE;
+	width:1000px;
+	height:500px;
+	box-shadow:2px 2px 20px #888;
+	padding:10px;
+}
+
+div#roomList{
+	width:190px;
+	float:left;
+	height:100%;
+	box-shadow:0px 0px 20px #888 inset;
+	background-color:#DDD;
+	-webkit-border-radius:5px;
+	overflow:auto;
+	border-top:2px solid #999;
+}
+
+div#chatRoom{
+	margin-left:30px;
+	float:left;
+	height:100%;
+	width:500px;
+}
+
+div#userList{
+	width:245px;
+	height:100%;
+	float:left;
+	margin-left:30px;
+	margin-top:0px;
+	box-shadow:0px 0px 20px #888 inset;
+	background-color:#DDD;
+	border-top:1px solid #999;
+	-webkit-border-radius:5px;
+	overflow:auto;
+}
+
+div#MessageField{
+	width:480px;
+	height:330px;
+	margin-top:20px;
+	background-color:#DDD;
+	box-shadow:2px 2px 20px #888 inset;
+	-webkit-border-radius:10px;
+	padding:10px;
+	overflow:auto;
+}
+
+div.singleMessage{
+	width:460px;
+	padding:5px;
+}
+
+div.singleUser{
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+}
+
+p.singleUser{
+	font-family:Microsoft YaHei;
+	color:#039;
+	font-size:17px;
+}
+
+div.singleText{
+	float:left;
+	margin-left:5px;
+	padding:8px;
+	-webkit-border-radius:5px;
+	background-color:#FFF;
+}
+
+p.singleText{
+	font-family:KaiTi;
+	font-size:15px;
+	line-height:100%;
+	margin:0px;
+}
+
+div#roomHead{
+	height:30px;
+}
+
+div.roomListElem{
+	height:50px;
+	margin-top:2px;
+	margin-left:3px;
+	line-height:50px;
+	width:184px;
+	text-align:center;
+	background-color:#EEF;
+	border-bottom:2px solid #999;
+	box-shadow:3px 3px 1px #888;
+}
+
+p.roomListElem{
+	margin:0;
+	font-family:Microsoft YaHei;
+	font-size:18px;
+}
+
+div.usernameListElem{
+	height:30px;
+	line-height:30px;
+	margin-top:2px;
+	margin-left:3px;
+	width:239px;
+	text-align:center;
+	background-color:#EEE;
+	border-bottom:1px solid #999;
+	box-shadow:3px 3px 1px #888;
+}
+
+p.usernameListElem{
+	font-family:KaiTi;
+	margin:0;
+}
+
+div#roomName{
+	float:left;
+	width:200px;
+	height:30px;
+	border-right:3px solid #999;
+	text-align:center;
+	padding:5px;
+}
+
+input#nameInput{
+	margin-left:70px;
+	-webkit-border-radius:8px;
+	height:30px;
+}
+
+textarea#messageInput{
+	width:490px;
+	bottom:15px;
+	left:230px;
+	box-shadow:1px 1px 3px #888;
+	-webkit-border-radius:8px;
+	position:absolute;
+}
